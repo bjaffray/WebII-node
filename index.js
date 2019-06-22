@@ -22,7 +22,6 @@ function handler(request, response){
   if(weight > 3.5)
     first(response, weight, p_type);
 
-  //compute(response, weight, p_type);
   switch(p_type){
     case "Stamped Letter":
       stamped(response, weight, p_type);
@@ -37,10 +36,10 @@ function handler(request, response){
       first(response, weight, p_type);
       break;
     default:
-      //return error message
       break;
   }
 }
+
 
 function stamped(response, weight, p_type){
   if(weight <= 1)
@@ -54,6 +53,7 @@ function stamped(response, weight, p_type){
 
   send(response, weight, p_type, price);
 }
+
 
 function metered(response, weight, p_type){
 
@@ -71,101 +71,31 @@ function metered(response, weight, p_type){
 
 
 function large(response, weight, p_type){
+
   weight = Math.ceil(weight);
-  switch(weight){
-    case 1:
-      price = Number.parseFloat(1.00).toFixed(2);
-      break;
-    case 2:
-      price = Number.parseFloat(1.15).toFixed(2); 
-      break;
-    case 3:
-      price = Number.parseFloat(1.30).toFixed(2);
-      break;
-    case 4:
-      price = Number.parseFloat(1.45).toFixed(2);
-      break;
-    case 5:
-      price = Number.parseFloat(1.60).toFixed(2);
-      break;
-    case 6:
-      price = Number.parseFloat(1.75).toFixed(2);
-      break;
-    case 7:
-      price = Number.parseFloat(1.90).toFixed(2);
-      break;
-    case 8:
-      price = Number.parseFloat(2.05).toFixed(2);
-      break;
-    case 9:
-      price = Number.parseFloat(2.20).toFixed(2);
-      break;
-    case 10:
-      price = Number.parseFloat(2.35).toFixed(2);
-      break;
-    case 11:
-      price = Number.parseFloat(2.50).toFixed(2);
-      break;
-    case 12:
-      price = Number.parseFloat(2.65).toFixed(2);
-      break;
-    case 13:
-      price = Number.parseFloat(2.80).toFixed(2);
-      break;
-    default:
-      //error message;
-      break;
+
+  if (weight <= 13) {
+    parF = 1 + ((weight - 1) * .15);
+    price = Number.parseFloat(parF).toFixed(2);
   }
+
   send(response, weight, p_type, price);
 }
 
-function first(respone, weight, p_type){
-  
+
+function first(response, weight, p_type){
+
   weight = Math.ceil(weight);
-  switch(weight){
-    case 1:
-      price = 3.66;
-      break;
-    case 2:
-      price = 3.66;
-      break;
-    case 3:
-      price = 3.66;
-      break;
-    case 4:
-      price = 3.66;
-      break;
-    case 5:
-      price = 4.39;
-      break;
-    case 6:
-      price = 4.39;
-      break;
-    case 7:
-      price = 4.39;
-      break;
-    case 8:
-      price = 4.39;
-      break;
-    case 9:
-      price = 5.19;
-      break;
-    case 10:
-      price = 5.19;
-      break;
-    case 11:
-      price = 5.19;
-      break;
-    case 12:
-      price = 5.19;
-      break;
-    case 13:
-      price = 5.71;
-      break;
-    default:
-      //error message;
-      break;
-  }
+
+  if (weight < 5 && weight > 0)
+    price = 3.66;
+  else if (weight < 9 && weight > 4)
+    price = 4.39
+  else if (weight < 13 && weight > 8)
+    price = 5.19;
+  else if (weight == 13)
+    price = 5.71;
+
   send(response, weight, p_type, price);
 }
 
