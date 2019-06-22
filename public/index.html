@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Postage Rate</title>
+</head>
+
+
+
+<body>
+    <h1>Postage Rate Submission Form</h1>
+    <form action="/postage" method="GET">
+        <select name="postage_type">
+            <option>Stamped Letter</option>
+            <option>Metered Letter</option>
+            <option>Large Envelope</option>
+            <option>First-Class Package Service</option>
+        </select>
+        
+        <input type="number" step="0.01" min="0" name="weight" max="13" placeholder="Enter Weight in oz.">
+        <label for="weight"><b>Must be <= 13oz.</b></label>
+        <br>
+        <button type="submit">calculate postage</button>
+    </form>
+</body>
+</html>
