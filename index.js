@@ -15,13 +15,17 @@ express()
 
 var price;
 
+// Handle the given request
 function handler(request, response){
+  // Pull the info from the request
   const weight = request.query.weight;
   const p_type = request.query.postage_type;
 
+  // If we are over a specific weight then make it first-class
   if(weight > 3.5)
-    first(response, weight, p_type);
+    firstClass(response, weight, p_type);
 
+  // Deals with the type of package
   switch(p_type){
     case "Stamped Letter":
       stamped(response, weight, p_type);
@@ -33,15 +37,17 @@ function handler(request, response){
       large(response, weight, p_type);
       break;
     case "First-Class Package Service":
-      first(response, weight, p_type);
+      firstClass(response, weight, p_type);
       break;
     default:
       break;
   }
+
 }
 
-
+// Function that deals with Stampped letters
 function stamped(response, weight, p_type){
+  
   if(weight <= 1)
     price = 0.55;
   else if(weight <= 2)
@@ -54,7 +60,7 @@ function stamped(response, weight, p_type){
   send(response, weight, p_type, price);
 }
 
-
+// Functions that deals with metered letters
 function metered(response, weight, p_type){
 
   if(weight <= 1)
@@ -69,7 +75,7 @@ function metered(response, weight, p_type){
   send(response, weight, p_type, price);
 }
 
-
+// Function that deals with a Large Envlope
 function large(response, weight, p_type){
 
   weight = Math.ceil(weight);
@@ -82,8 +88,8 @@ function large(response, weight, p_type){
   send(response, weight, p_type, price);
 }
 
-
-function first(response, weight, p_type){
+// Function that deals with First-Class Packages
+function firstClass(response, weight, p_type){
 
   weight = Math.ceil(weight);
 
@@ -99,6 +105,7 @@ function first(response, weight, p_type){
   send(response, weight, p_type, price);
 }
 
+// Funcations that sends the nessacary info to the results page (.ejs)
 function send(response, w, p_t, p)
 {
   const params = {weight: w, p_type: p_t, price: p};
